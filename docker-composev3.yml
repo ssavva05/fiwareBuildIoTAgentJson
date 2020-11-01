@@ -263,38 +263,6 @@ services:
             ipv4_address:  172.18.1.111
         volumes:
             - node-red-data:/usr/share/node-red/data
-    jobmanager:
-        restart:           always
-        image:             flink:1.5.3-hadoop24-scala_2.11
-        container_name:    node-jobmanager
-        expose:
-            - "6123"
-        ports:
-            - "8081:8081"
-        networks:
-          default:
-            ipv4_address:  172.18.1.201
-        command:           jobmanager
-        environment:
-            - JOB_MANAGER_RPC_ADDRESS=jobmanager
-
-    taskmanager:
-        restart:           always
-        image:             flink:1.5.3-hadoop24-scala_2.11
-        container_name:    node-taskmanager
-        expose:
-            - "6121"
-            - "6122"
-        networks:
-          default:
-            ipv4_address:  172.18.1.202
-        depends_on:
-            - jobmanager
-        command:           taskmanager
-        links:
-            - "jobmanager:jobmanager"
-        environment:
-            - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
 networks:
   default:
